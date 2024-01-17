@@ -1,53 +1,47 @@
 ---
-title: Image Generation
+title: Object Generation
 description: 'With tons of models to choose from, you are able to get the best models for your use case'
-icon: 'image'
+icon: 'object-subtract'
 ---
 
-<Warning>The 3D Objects Creations Endpoint is still under development and currently is in beta mode.</Warning>
+<Warning>The Text-to-3D Objects Generation Endpoint is still under development and currently is in beta mode.</Warning>
 
-## Image Creation Models
+## Object Generation Models
 
 ### Harnessing AI for Visual Creativity
 
-This feature allows users to transform ideas into visual representations, leveraging the power of advanced AI algorithms. Whether it's for generating unique artworks, visualizing concepts, or creating digital content, OpenRouter's Image Creation tool offers a versatile platform for a myriad of creative endeavors.
+This feature allows users to transform ideas into visual representations, leveraging the power of advanced AI algorithms. OpenRouter's Object Generation API offers a versatile platform for a myriad of creative endeavors.
 
-### The Mechanism of Image Generation
+### The Mechanism of Object Generation
 
-**Transforming Text into Images**
+**Transforming Text into Objects**
 
-At the heart of OpenRouter's Image Creation feature is the ability to interpret textual descriptions and convert them into vivid, detailed images. This process involves:
+At the heart of OpenRouter's Image Creation feature is the ability to interpret textual descriptions and convert them into an object. This process involves:
 
 - Understanding the textual description: The AI analyzes the input text to grasp the intended visual elements and style.
-- Image synthesis: Utilizing deep learning techniques, the AI then synthesizes an image that aligns with the provided description.
+- Object synthesis: Utilizing deep learning techniques, the AI then synthesizes an object that aligns with the provided description.
 
-**Customization and Control**
+## Building with Object Generation Models (Beta)
 
-Users have significant control over the outcome, with the ability to specify details like:
-
-- Subject matter: From landscapes to abstract concepts.
-- Artistic style: Mimicking various art styles or creating something entirely new.
-- Composition: Dictating the layout and interaction of elements within the image.
-
-## Applications of Image Creation
-
-OpenRouter's Image Creation tool opens up new possibilities across various fields:
-
-- Graphic Design and Marketing: Creating visual content for campaigns, social media, and branding.
-- Education and Research: Visualizing complex concepts for better understanding.
-- Entertainment and Gaming: Generating assets and backgrounds for games and virtual environments.
-- Art and Creative Expression: Assisting artists in bringing their visions to life.
-
-## Building with Image Models (Beta)
-
-Choose the language or tool you want to get started with using the OpenRouter API for the Image models.
-
+Choose the language or tool you want to get started with using the OpenRouter API.
 
 <Tabs>
 <Tab title="Typescript">
 ## Step 1: Install Fetch API
 
 Ensure that you have the Fetch API available in your environment. If you're using a modern browser or a Node.js version that supports it, you're all set. Otherwise, you may need to install a polyfill or use an alternative method for making HTTP requests.
+
+You can install `node-fetch` by running the following command
+
+```bash
+npm install node-fetch
+```
+
+You can then import `fetch` at the top of your file like so
+
+```typescript
+import fetch from 'node-fetch';
+```
 
 ## Step 2: Set Up Your Request
 
