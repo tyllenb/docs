@@ -23,6 +23,18 @@ Choose the language or tool you want to get started with using the OpenRouter AP
 
 Ensure that you have the Fetch API available in your environment. If you're using a modern browser or a Node.js version that supports it, you're all set. Otherwise, you may need to install a polyfill or use an alternative method for making HTTP requests.
 
+You can install `node-fetch` by running the following command
+
+```bash
+npm install node-fetch
+```
+
+You can then import `fetch` at the top of your file like so
+
+```typescript
+import fetch from 'node-fetch';
+```
+
 ## Step 2: Set Up Your Request
 
 You'll be making a POST request to the OpenRouter API. Here's the basic structure you'll use, wrapped in a function for easy reuse:
