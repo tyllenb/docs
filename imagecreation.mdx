@@ -1,22 +1,48 @@
 ---
-title: Quickstart
-description: Get started with OpenRouter to seamlessly integrate a variety of language models into your application.
+title: Image Generation
+description: 'With tons of models to choose from, you are able to get the best models for your use case'
+icon: 'image'
 ---
 
-# Quick Start Guide for OpenRouter
+<Warning>The 3D Objects Creations Endpoint is still under development and currently is in beta mode.</Warning>
 
-This guide will help you set up OpenRouter in your application so you can take advantage of our standardized API and extensive model offerings.
+## Image Creation Models
 
-## Prerequisites
+### Harnessing AI for Visual Creativity
 
-- Sign up for an [OpenRouter account](https://openrouter.ai/).
-- Retrieve your `OPENROUTER_API_KEY`.
-- If available, have your `YOUR_SITE_URL` and `YOUR_SITE_NAME` for API rankings. ***(Optional)***
+This feature allows users to transform ideas into visual representations, leveraging the power of advanced AI algorithms. Whether it's for generating unique artworks, visualizing concepts, or creating digital content, OpenRouter's Image Creation tool offers a versatile platform for a myriad of creative endeavors.
+
+### The Mechanism of Image Generation
+
+**Transforming Text into Images**
+
+At the heart of OpenRouter's Image Creation feature is the ability to interpret textual descriptions and convert them into vivid, detailed images. This process involves:
+
+- Understanding the textual description: The AI analyzes the input text to grasp the intended visual elements and style.
+- Image synthesis: Utilizing deep learning techniques, the AI then synthesizes an image that aligns with the provided description.
+
+**Customization and Control**
+
+Users have significant control over the outcome, with the ability to specify details like:
+
+- Subject matter: From landscapes to abstract concepts.
+- Artistic style: Mimicking various art styles or creating something entirely new.
+- Composition: Dictating the layout and interaction of elements within the image.
+
+## Applications of Image Creation
+
+OpenRouter's Image Creation tool opens up new possibilities across various fields:
+
+- Graphic Design and Marketing: Creating visual content for campaigns, social media, and branding.
+- Education and Research: Visualizing complex concepts for better understanding.
+- Entertainment and Gaming: Generating assets and backgrounds for games and virtual environments.
+- Art and Creative Expression: Assisting artists in bringing their visions to life.
+
+## Building with Image Models (Beta)
+
+Choose the language or tool you want to get started with using the OpenRouter API for the Image models.
 
 
-## Quickstart language selection
-
-Choose the language or tool you want to get started with using the OpenRouter API
 <Tabs>
 <Tab title="Typescript">
 ## Step 1: Install Fetch API
@@ -28,21 +54,23 @@ Ensure that you have the Fetch API available in your environment. If you're usin
 You'll be making a POST request to the OpenRouter API. Here's the basic structure you'll use, wrapped in a function for easy reuse:
 
 ```typescript Use Model On OpenRouter
-  fetch("https://openrouter.ai/api/v1/chat/completions", {
-  method: "POST",
-  headers: {
-    "Authorization": \`Bearer \${OPENROUTER_API_KEY}\`,
-    "HTTP-Referer": \`${YOUR_SITE_URL}\`, // Optional, for openrouter.ai rankings.
-    "X-Title": \`${YOUR_SITE_NAME}\`, // Optional, for display in rankings.
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    "model": "openai/gpt-3.5-turbo", // Default model, can be customized.
-    "messages": [
-      {"role": "user", "content": "Your prompt here"}
-    ]
-  })
-})
+  
+  fetch('https://openrouter.ai/api/v1/objects/generations', {
+    method: 'POST',
+    headers: {
+        "Authorization": \`Bearer \${OPENROUTER_API_KEY}\`,
+        "HTTP-Referer": \`${YOUR_SITE_URL}\`, // Optional, for openrouter.ai rankings.
+        "X-Title": \`${YOUR_SITE_NAME}\`, // Optional, for display in rankings.
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        prompt: "a chair shaped like an avocado",
+        num_inference_steps: 32,
+        num_outputs: 1,
+        extension: "ply",
+        model: "openai/shap-e"
+    })
+});
 ```
 Replace `OPENROUTER_API_KEY`, `YOUR_SITE_URL`, and `YOUR_SITE_NAME` with your actual credentials and information.
 
@@ -51,12 +79,12 @@ Replace `OPENROUTER_API_KEY`, `YOUR_SITE_URL`, and `YOUR_SITE_NAME` with your ac
 Once you've made the request, you'll want to handle the response to ensure that your application can process and display the results effectively.
 
 ```typescript Add Response Handling
-fetch("https://openrouter.ai/api/v1/chat/completions", {
+fetch("https://openrouter.ai/api/v1/objects/generations", {
   // ... (rest of the fetch request)
 })
 .then(response => response.json())
 .then(data => {
-  console.log('Response from OpenRouter:', data);
+  console.log('Generated Image:', data);
 })
 .catch(error => {
   console.error('Error:', error);
@@ -64,20 +92,16 @@ fetch("https://openrouter.ai/api/v1/chat/completions", {
 ```
 
 An example of a sample response
-```typescript Example Response
-{
-  "id": "gen-xxxxxxxxxxxxxx",
-  "choices": [
-    {
-      "finish_reason": "stop", // Different models provide different reasons here
-      "message": { // will be "delta" if streaming
-        role: "assistant",
-        content: "Hello there!"
-      }
+```typescript Example Response Type
+    //Each generation will contain either a base64 string or a hosted url, or both.
+    interface MediaOutput {
+    uri?: string; //base64 string
+    url?: string; //hosted url
     }
-  ],
-  "model": "openai/gpt-3.5-turbo" // Could also be "anthropic/claude-2.1", etc, depending on the "model" that ends up being used
-}
+
+    interface MediaResponse {
+    generations: MediaOutput[];
+    }
 ```
 
 ## Step 4: Handle Errors
@@ -151,17 +175,18 @@ def send_request():
     YOUR_APP_NAME = "your_app_name_here"
 
     response = requests.post(
-        url="https://openrouter.ai/api/v1/chat/completions",
+        url="https://openrouter.ai/api/v1/objects/generations",
         headers={
             "Authorization": f"Bearer {OPENROUTER_API_KEY}",
             "HTTP-Referer": YOUR_SITE_URL,  # Optional, for openrouter.ai rankings.
             "X-Title": YOUR_APP_NAME,  # Optional, shows in rankings on openrouter.ai.
         },
         data=json.dumps({
-            "model": "openai/gpt-3.5-turbo",  # Optional
-            "messages": [
-                {"role": "user", "content": "What is the meaning of life?"}
-            ]
+            "prompt": "a chair shaped like an avocado",
+            "num_inference_steps": 32,
+            "num_outputs": 1,
+            "extension": "ply",
+            "model": "openai/shap-e"
         })
     )
     return response
@@ -176,31 +201,27 @@ Process the response from the API to handle the data effectively in your applica
   response = send_request()
   if response.status_code == 200:
       data = response.json()
-      print('Response from OpenRouter:', data)
+      print('Generated Image:', data)
   else:
       print('Error:', response.status_code)
 ```
 
 An example of a sample response
-```typescript Example Response
-{
-  "id": "gen-xxxxxxxxxxxxxx",
-  "choices": [
-    {
-      "finish_reason": "stop", // Different models provide different reasons here
-      "message": { // will be "delta" if streaming
-        role: "assistant",
-        content: "Hello there!"
-      }
-    }
-  ],
-  "model": "openai/gpt-3.5-turbo" // Could also be "anthropic/claude-2.1", etc, depending on the "model" that ends up being used
+```typescript Example Response Type
+//Each generation will contain either a base64 string or a hosted url, or both.
+interface MediaOutput {
+uri?: string; //base64 string
+url?: string; //hosted url
+}
+
+interface MediaResponse {
+generations: MediaOutput[];
 }
 ```
 
 ## Step 4: Handle Errors
 
-You can log an errors you may encounter and use the codes to help debug what the problem might be.
+You can log any errors you may encounter and use the codes to help debug what the problem might be.
 
 You can adjust your code for handling errors by using the following code
 
@@ -256,15 +277,16 @@ Before you begin, ensure you have `cURL` installed in your command-line environm
 You'll be making a POST request to the OpenRouter API using cURL. Here's the command you'll use:
 
 ```bash
-curl https://openrouter.ai/api/v1/chat/completions \
+curl https://openrouter.ai/api/v1/objects/generations \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OPENROUTER_API_KEY" \
   -d '{
-  "model": "openai/gpt-3.5-turbo",
-  "messages": [
-    {"role": "user", "content": "What is the meaning of life?"}
-  ]
-}'
+    "prompt": "a chair shaped like an avocado",
+    "num_inference_steps": 32,
+    "num_outputs": 1,
+    "extension": "ply",
+    "model": "openai/shap-e"
+  }'
 ```
 
 In this command, replace `$OPENROUTER_API_KEY` with your actual API key.
@@ -315,4 +337,3 @@ If there's an error in your request or with the API, cURL will display an error 
 </CardGroup>
 </Tab>
 </Tabs>
-

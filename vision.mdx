@@ -1,22 +1,50 @@
 ---
-title: Quickstart
-description: Get started with OpenRouter to seamlessly integrate a variety of language models into your application.
+title: Vision
+description: 'With tons of models to choose from, you are able to get the best models for your use case'
+icon: 'eye'
 ---
 
-# Quick Start Guide for OpenRouter
+## Vision Models
 
-This guide will help you set up OpenRouter in your application so you can take advantage of our standardized API and extensive model offerings.
+### Expanding Horizons Beyond Text
 
-## Prerequisites
+Historically, language models were confined to text input, limiting their applicability across various domains. OpenRouter's aggregation of vision capabilities mark a significant leap, broadening the spectrum of use cases and applications. This advancement enables the model to not only process text but also interpret and respond to image-based inputs. 
 
-- Sign up for an [OpenRouter account](https://openrouter.ai/).
-- Retrieve your `OPENROUTER_API_KEY`.
-- If available, have your `YOUR_SITE_URL` and `YOUR_SITE_NAME` for API rankings. ***(Optional)***
+### Image Understanding and Interaction
 
+**Image Input Processing**
 
-## Quickstart language selection
+The API accepts images as input, allowing the model to analyze and understand visual content. This feature opens up possibilities for a range of tasks, including but not limited to:
 
-Choose the language or tool you want to get started with using the OpenRouter API
+- Image-based question answering: The model can provide detailed responses to questions about the contents of an image.
+- Object detection and classification: Identifying and categorizing objects within an image.
+- Contextual understanding: Interpreting the context or setting depicted in an image.
+
+**Bridging Visual and Textual Data**
+
+By combining image processing with its robust language understanding, OpenRouter can seamlessly bridge the gap between visual and textual information. This integration allows for more nuanced and comprehensive AI applications, such as:
+
+- Describing images in natural language.
+- Generating text-based summaries of visual content.
+- Enhancing accessibility through image descriptions for visually impaired users.
+
+## Innovations in Multi-Modal AI
+
+OpenRouter's vision capabilities represent a significant stride in multi-modal AI, where the model can process and synthesize information from both visual and textual inputs. This dual-input approach greatly enhances the model's versatility, making it suitable for a wide array of innovative applications:
+
+- Creative arts and media generation.
+- Advanced educational tools that combine visual aids with explanatory text.
+- Enhanced customer service bots capable of understanding screenshots or product images.
+- Research and analysis in fields that require combined interpretation of text and imagery.
+
+## Building with Vision Models
+
+Choose the language or tool you want to get started with using the OpenRouter API for the Vision models.
+
+Here you will be using the same API enpoint as the completions models, but you will be changing the model and message content depending on the use case.
+
+<Tip>Vision models on OpenRouter have the word `vision` generally appended to them. That way you can use those for vision purposes</Tip>
+
 <Tabs>
 <Tab title="Typescript">
 ## Step 1: Install Fetch API
@@ -28,21 +56,31 @@ Ensure that you have the Fetch API available in your environment. If you're usin
 You'll be making a POST request to the OpenRouter API. Here's the basic structure you'll use, wrapped in a function for easy reuse:
 
 ```typescript Use Model On OpenRouter
-  fetch("https://openrouter.ai/api/v1/chat/completions", {
-  method: "POST",
-  headers: {
-    "Authorization": \`Bearer \${OPENROUTER_API_KEY}\`,
-    "HTTP-Referer": \`${YOUR_SITE_URL}\`, // Optional, for openrouter.ai rankings.
-    "X-Title": \`${YOUR_SITE_NAME}\`, // Optional, for display in rankings.
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    "model": "openai/gpt-3.5-turbo", // Default model, can be customized.
-    "messages": [
-      {"role": "user", "content": "Your prompt here"}
-    ]
-  })
-})
+  
+  fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+        "Authorization": \`Bearer \${OPENROUTER_API_KEY}\`,
+        "HTTP-Referer": \`${YOUR_SITE_URL}\`, // Optional, for openrouter.ai rankings.
+        "X-Title": \`${YOUR_SITE_NAME}\`, // Optional, for display in rankings.
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        model: "google/gemini-pro-vision",
+        messages: [
+            {
+                role: "user",
+                content: [
+                    { type: "text", text: "What’s in this image?" },
+                    {
+                        type: "image_url",
+                        image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+                    }
+                ]
+            }
+        ]
+    })
+});
 ```
 Replace `OPENROUTER_API_KEY`, `YOUR_SITE_URL`, and `YOUR_SITE_NAME` with your actual credentials and information.
 
@@ -158,9 +196,18 @@ def send_request():
             "X-Title": YOUR_APP_NAME,  # Optional, shows in rankings on openrouter.ai.
         },
         data=json.dumps({
-            "model": "openai/gpt-3.5-turbo",  # Optional
-            "messages": [
-                {"role": "user", "content": "What is the meaning of life?"}
+            'model': "google/gemini-pro-vision",
+            'messages': [
+                {
+                    'role': "user",
+                    'content': [
+                        {'type': "text", 'text': "What’s in this image?"},
+                        {
+                            'type': "image_url",
+                            'image_url': "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+                        }
+                    ]
+                }
             ]
         })
     )
@@ -260,11 +307,20 @@ curl https://openrouter.ai/api/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OPENROUTER_API_KEY" \
   -d '{
-  "model": "openai/gpt-3.5-turbo",
-  "messages": [
-    {"role": "user", "content": "What is the meaning of life?"}
-  ]
-}'
+        "model": "google/gemini-pro-vision",
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    { "type": "text", "text": "What’s in this image?" },
+                    {
+                        "type": "image_url",
+                        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+                    }
+                ]
+            }
+        ]
+    }'
 ```
 
 In this command, replace `$OPENROUTER_API_KEY` with your actual API key.
@@ -315,4 +371,3 @@ If there's an error in your request or with the API, cURL will display an error 
 </CardGroup>
 </Tab>
 </Tabs>
-
